@@ -1,7 +1,17 @@
+using ChequeBook.Infrastructure.DataConnection;
+using Microsoft.EntityFrameworkCore;
+using ChequeBook.Infrastructure.Utility;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<CQDataConnection>
+    (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // Add services to the container.
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllersWithViews();
+
+builder.Services.InjectService();
 
 var app = builder.Build();
 

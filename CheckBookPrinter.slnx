@@ -1,3 +1,6 @@
 <Solution>
   <Project Path="CheckBookPrinter/CheckBookPrinter.csproj" />
+  <Project Path="ChequeBook.Application/ChequeBook.Application.csproj" Id="63fd54b5-8035-4263-b343-bf504a00a904" />
+  <Project Path="ChequeBook.Domain/ChequeBook.Domain.csproj" Id="236243c4-a855-4f79-b3c6-9e17616bed9a" />
+  <Project Path="ChequeBook.Infrastructure/ChequeBook.Infrastructure.csproj" Id="f3aa1eed-3769-47c6-ad98-8fe32eda5c99" />
 </Solution>

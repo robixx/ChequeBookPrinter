@@ -1,0 +1,255 @@
+﻿@model List<ChequeBook.Application.BankDto>
+
+@{
+    ViewData["Title"] = "Bank Information";
+    ViewBag.pageTitle = "Check Book Printer";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int i = 1;
+}
+
+<div class="content">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>Bank List</h4>
+            <h6>Manage your bank </h6>
+        </div>
+        <div class="page-btn">
+            <button type="button" class="btn btn-added btn-sm" id="bntNewSave">
+                <img src="~/assets/img/icons/plus.svg" alt="img"
+                     class="me-1">Add New
+            </button>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-top">
+                <div class="search-set">
+                    <div class="search-path">
+                        <a class="btn btn-filter"
+                           id="filter_search">
+                            <img src="~/assets/img/icons/filter.svg"
+                                 alt="img">
+                            <span>
+                                <img src="~/assets/img/icons/closes.svg"
+                                     alt="img">
+                            </span>
+                        </a>
+                    </div>
+                    <div class="search-input">
+                        <a class="btn btn-searchset">
+                            <img src="~/assets/img/icons/search-white.svg"
+                                 alt="img">
+                        </a>
+                    </div>
+                </div>
+                <div class="wordset">
+                    <ul>
+                        <li>
+                            <a data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               title="pdf">
+                                <img src="~/assets/img/icons/pdf.svg"
+                                     alt="img">
+                            </a>
+                        </li>
+                        <li>
+                            <a data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               title="excel">
+                                <img src="~/assets/img/icons/excel.svg"
+                                     alt="img">
+                            </a>
+                        </li>
+                        <li>
+                            <a data-bs-toggle="tooltip"
+                               data-bs-placement="top"
+                               title="print">
+                                <img src="~/assets/img/icons/printer.svg"
+                                     alt="img">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            <div class="table-responsive">
+                <table class="table  datanew">
+                    <thead>
+                        <tr>
+                            <th>
+                                Sl#
+                            </th>
+                            <th>Image</th>
+                            <th>BankName</th>
+                            <th>Status</th>
+
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @i
+                                </td>
+                                <td class="productimgname">
+                                    <a href="javascript:void(0);"
+                                       class="product-img">
+                                        <img src="@Url.Action("GetImage", "Cheque", new { fileName = item.BankImage })"
+                                             alt="product">
+                                    </a>
+                                </td>
+                                <td>@item.BankName</td>
+                                <td>@item.Status</td>
+                                <td>
+                                    <a class="me-3"
+                                       href="product-details.html">
+                                        <img src="~/assets/img/icons/eye.svg"
+                                             alt="img">
+                                    </a>
+                                    <a class="me-3"
+                                       href="editproduct.html">
+                                        <img src="~/assets/img/icons/edit.svg"
+                                             alt="img">
+                                    </a>
+                                    <a class="confirm-text"
+                                       href="javascript:void(0);">
+                                        <img src="~/assets/img/icons/delete.svg"
+                                             alt="img">
+                                    </a>
+                                </td>
+                            </tr>
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+@* 
+Modal open  *@
+
+<div class="modal fade" id="bankModal" tabindex="-1" aria-labelledby="bankModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="bankModalLabel"></h5>
+                <button type="button" class=" btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">Bank Name</label>
+                    <input type="text" class="form-control" name="bankName" id="bankName" placeholder="Enter Bank Name" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Image Upload  <span class="text-green" id="imageLabel">No file chosen</span></label>
+                    <div class="image-upload">
+                        <input type="file" id="imageInput">
+                        <div class="image-uploads">
+                            <img src="~/assets/img/icons/upload.svg"
+                                 alt="img">
+                            <h4>
+                                Drag and drop a file to
+                                upload
+                            </h4>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <label class="checkboxs">
+                        <input type="checkbox" id="statusCheckbox">
+                        <span class="checkmarks"></span>
+                       
+                    </label>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-sm btn-primary" id="btnSaveBank">Save Changes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/assets/js/jquery-3.6.0.min.js"></script>
+<script src="~/assets/plugins/select2/js/select2.min.js"></script>
+
+
+<script>
+    $('#bntNewSave').on('click',function(){
+
+        $('#bankModalLabel').text("Bank Information Added")
+
+          $('#bankModal').modal('show');
+    });
+
+
+    //image name show in label
+    $('#imageInput').on('change', function() {
+        var fileName = $(this).val().split('\\').pop(); // get just file name
+        if (fileName) {
+            $('#imageLabel').text(fileName);
+        } else {
+            $('#imageLabel').text('No file chosen'); // fallback
+        }
+    });
+
+    // modal data save
+
+     $('#btnSaveBank').on('click', function() {
+
+        var bankName = $('#bankName').val().trim();
+        var status = $('#statusCheckbox').is(':checked') ? 1 : 0;
+        var fileInput = $('#imageInput')[0].files[0];
+
+        if (!bankName) {
+            alert("Bank Name is required!");
+            return;
+        }
+               
+        var formData = new FormData();
+        formData.append('BankName', bankName);
+        formData.append('Status', status);
+        if (fileInput) {
+            formData.append('BankImage', fileInput);
+        }
+
+        // AJAX call
+        $.ajax({
+            url: '/Admin/Cheque/SaveBank',
+            type: 'POST',
+            data: formData,
+            contentType: false,       
+            processData: false,       
+            success: function(response) {
+                alert("Bank saved successfully!");
+                $('#bankModal').modal('hide');  
+                location.reload();              
+            },
+            error: function(err) {
+                console.error(err);
+                alert("Error saving bank!");
+            }
+        });
+
+    });
+
+
+
+</script>
